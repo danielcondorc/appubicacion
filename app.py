@@ -8,9 +8,9 @@
 # Vamos a usar formularios de código en Google Colab para esto.
 
 #@markdown ## Introduzca su Ubicación
-pais = "España" #@param {type:"string"}
-ciudad = "Madrid" #@param {type:"string"}
-direccion_exacta = "Calle Gran Vía 10" #@param {type:"string"}
+pais = "Perú" #@param {type:"string"}
+ciudad = "Lima" #@param {type:"string"}
+direccion_exacta = "Av. Honorio Delgado" #@param {type:"string"}
 
 # Podemos imprimir los datos recogidos para verificar
 print(f"País: {pais}")
