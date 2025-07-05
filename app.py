@@ -1,88 +1,53 @@
-# prompt: Código para un aplicativo que registre información de la ubicación del usuario
+# prompt: El app debe recoger los datos de país, ciudad, y dirección exacta.
 
-# Este código asume que estás en un entorno de Google Colab o Jupyter Notebook
-# que puede acceder a la ubicación del navegador si el usuario la permite.
+# Dado que Colab/Jupyter Notebooks no pueden obtener la ubicación exacta del navegador del usuario
+# sin una interacción compleja del frontend (como se explicó en los comentarios),
+# la forma más práctica de "recoger" estos datos en este entorno es
+# pidiéndole al usuario que los introduzca manualmente o usando un widget de formulario.
 
-# Para entornos de navegador, necesitarás usar JavaScript para obtener la ubicación.
-# En un entorno de notebook como Colab, podemos simularlo o si la API de Colab
-# lo permite (aunque no es una funcionalidad estándar y simple obtener la ubicación
-# directamente del usuario que está ejecutando el notebook).
+# Vamos a usar formularios de código en Google Colab para esto.
 
-# Si necesitas una solución más robusta para una aplicación web, deberás usar
-# la API de Geolocation del navegador con JavaScript y enviar los datos a un backend.
+#@markdown ## Introduzca su Ubicación
+pais = "España" #@param {type:"string"}
+ciudad = "Madrid" #@param {type:"string"}
+direccion_exacta = "Calle Gran Vía 10" #@param {type:"string"}
 
-# Este ejemplo solo muestra cómo podrías registrar una ubicación si ya la tuvieras
-# como variables en tu notebook.
+# Podemos imprimir los datos recogidos para verificar
+print(f"País: {pais}")
+print(f"Ciudad: {ciudad}")
+print(f"Dirección Exacta: {direccion_exacta}")
 
-def registrar_ubicacion(latitud, longitud):
-  """
-  Simula el registro de la ubicación del usuario.
-  En una aplicación real, esto podría guardar los datos en una base de datos.
+# Ahora puedes usar estas variables (`pais`, `ciudad`, `direccion_exacta`)
+# en tu código Python para procesar, guardar o usar los datos de ubicación.
 
-  Args:
-    latitud: La latitud de la ubicación.
-    longitud: La longitud de la ubicación.
-  """
-  print(f"Ubicación registrada: Latitud = {latitud}, Longitud = {longitud}")
-  # Aquí podrías agregar código para guardar en un archivo, base de datos, etc.
-
-# --- Ejemplo de uso (simulando que ya obtuviste la ubicación) ---
-# En una aplicación real, obtendrías latitud y longitud de alguna fuente (ej. API del navegador)
-latitud_usuario = 40.7128  # Ejemplo de latitud
-longitud_usuario = -74.0060 # Ejemplo de longitud
-
-# Llama a la función para registrar la ubicación
-registrar_ubicacion(latitud_usuario, longitud_usuario)
-
-# Para obtener la ubicación real del navegador en un entorno web, necesitarías
-# un fragmento de JavaScript ejecutado en el frontend. Colab no facilita esto directamente
-# en el código Python de la celda de ejecución principal.
-
-# Si estuvieras construyendo una aplicación web con un frontend y un backend:
-# 1. En el frontend (JavaScript): Usar navigator.geolocation.getCurrentPosition()
-# 2. Enviar la latitud y longitud al backend (tu código Python podría ser el backend)
-# 3. El backend (Python) recibiría los datos y los procesaría/guardaría.
-
-# Ejemplo conceptual (NO EJECUTABLE DIRECTAMENTE EN CELDA DE PYTHON PARA OBTENER UBICACIÓN DEL USUARIO)
-"""
-<script>
-function obtenerUbicacion() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      const lat = position.coords.latitude;
-      const lng = position.coords.longitude;
-
-      console.log("Latitud:", lat);
-      console.log("Longitud:", lng);
-
-      // Aquí enviarías estos datos a tu backend Python (ej. usando fetch o XMLHttpRequest)
-      // fetch('/registrar_ubicacion', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({ latitud: lat, longitud: lng }),
-      // })
-      // .then(response => response.json())
-      // .then(data => console.log('Success:', data))
-      // .catch((error) => console.error('Error:', error));
-
-    }, function(error) {
-      console.error("Error obteniendo ubicación:", error);
-    });
-  } else {
-    alert("Geolocalización no soportada por este navegador.");
-  }
+# Ejemplo: podrías guardar estos datos en un diccionario o lista
+ubicacion_recogida = {
+    "país": pais,
+    "ciudad": ciudad,
+    "direccion_exacta": direccion_exacta
 }
 
-// Llama a la función para obtener la ubicación cuando sea necesario (ej. al cargar la página)
-// obtenerUbicacion();
+print("\nDatos de ubicación en un diccionario:")
+print(ubicacion_recogida)
 
-</script>
-"""
+# Si necesitaras guardar esto en un archivo CSV o una base de datos,
+# podrías usar bibliotecas como pandas o sqlite3.
 
-# En resumen, el código Python proporcionado arriba simula el registro de la ubicación
-# una vez que ya tienes los datos de latitud y longitud. Para obtener esos datos
-# de la ubicación real del usuario en un entorno web, necesitas usar JavaScript
-# en el lado del cliente y luego enviar esos datos a tu código Python (si está
-# actuando como un backend).
+# Ejemplo con pandas (si quieres agregarlo a un DataFrame)
+import pandas as pd
+
+# Crea un DataFrame con los datos recogidos
+df_ubicaciones = pd.DataFrame([ubicacion_recogida])
+
+print("\nDatos de ubicación en un DataFrame:")
+df_ubicaciones
+
+# Si tuvieras múltiples ubicaciones, las irías agregando a este DataFrame.
+# Por ejemplo, si recogieras datos de otro usuario:
+# pais2 = "México" #@param {type:"string"}
+# ciudad2 = "Ciudad de México" #@param {type:"string"}
+# direccion_exacta2 = "Av. Paseo de la Reforma 300" #@param {type:"string"}
+# nueva_ubicacion = {"país": pais2, "ciudad": ciudad2, "direccion_exacta": direccion_exacta2}
+# df_ubicaciones = pd.concat([df_ubicaciones, pd.DataFrame([nueva_ubicacion])], ignore_index=True)
+# print("\nDataFrame con múltiples ubicaciones:")
+# print(df_ubicaciones)
